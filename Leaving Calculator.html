@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Leaving Pension Decider</title>
+<meta name="description" content="Leaving Pension Decider - quick guidance for leavers (refund, transfer, defer, retirement)"/>
+<style>
+  /* Classic, classy styling - mobile-first */
+  :root{
+    --bg:#fbfaf8;
+    --card:#ffffff;
+    --muted:#6b6b6b;
+    --accent:#0b3d91; /* deep blue */
+    --accent-2:#d9a400; /* warm gold */
+    --radius:12px;
+    --maxw:900px;
+    --glass: rgba(11,61,145,0.08);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: "Georgia", "Times New Roman", serif;
+    background:linear-gradient(180deg,var(--bg),#f3f6fb);
+    color:#111;
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    justify-content:center;
+    padding:22px;
+  }
+  .wrap{width:100%;max-width:var(--maxw)}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+  .badge{
+    width:64px;height:64px;border-radius:12px;
+    background:linear-gradient(135deg,var(--accent),#0b5fb8);
+    display:grid;place-items:center;color:white;font-weight:700;font-family:sans-serif;font-size:20px;
+    box-shadow:0 6px 18px var(--glass);
+  }
+  h1{font-size:20px;margin:0;font-weight:700}
+  .subtitle{color:var(--muted);font-size:13px;margin-top:4px;font-family:Arial, Helvetica, sans-serif}
+  main{margin-top:18px}
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:18px;
+    box-shadow:0 8px 28px rgba(13,25,45,0.06);
+    border:1px solid rgba(0,0,0,0.03);
+  }
+
+  /* form grid */
+  .grid{display:grid;grid-template-columns:1fr;gap:12px}
+  label{display:block;font-family:Arial, Helvetica, sans-serif;font-size:13px;color:var(--muted);margin-bottom:6px}
+  input[type="date"], input[type="text"]{
+    width:100%;padding:10px 12px;border-radius:8px;border:1px solid #e6e6e6;font-size:14px;background:#fff;
+    font-family:inherit;
+  }
+
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .col{flex:1;min-width:140px}
+
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+  .btn{
+    padding:10px 14px;border-radius:8px;border:0;background:var(--accent);color:white;font-weight:600;
+    cursor:pointer;font-family:Arial, Helvetica, sans-serif;
+    box-shadow:0 6px 18px rgba(11,61,145,0.12);
+  }
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(11,61,145,0.12);box-shadow:none}
+  .btn.warning{background:var(--accent-2);color:#082; box-shadow:0 6px 18px rgba(217,164,0,0.12)}
+
+  /* result area */
+  .result{margin-top:14px;padding:14px;border-radius:10px;background:linear-gradient(180deg,#ffffff,#fbfdff);border:1px solid rgba(11,61,145,0.06)}
+  .result h3{margin:0;font-size:16px;color:var(--accent)}
+  .note{color:var(--muted);font-size:14px;margin-top:8px}
+
+  /* choices box */
+  .options{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .option-card{flex:1;min-width:160px;border-radius:10px;padding:12px;border:1px solid #eee;background:#fff;box-shadow:0 6px 14px rgba(0,0,0,0.04)}
+  .option-card strong{display:block;margin-bottom:8px;color:#222}
+
+  /* confirmation modal */
+  .modal {
+    position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.35);z-index:40;
+  }
+  .modal .panel{width:92%;max-width:540px;background:white;padding:20px;border-radius:12px}
+  .modal.show{display:flex}
+
+  footer{margin-top:18px;color:var(--muted);font-family:Arial, Helvetica, sans-serif;font-size:13px;text-align:center}
+
+  /* responsive */
+  @media(min-width:760px){
+    .grid{grid-template-columns:1fr 1fr}
+    .col-wide{grid-column:span 2}
+    h1{font-size:24px}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="#" aria-label="Leaving Pension Decider">
+        <div class="badge">LP</div>
+        <div>
+          <h1>Leaving Pension Decider</h1>
+          <div class="subtitle">Quick guidance for Leavers — Refund, Transfer, Defer or Retire</div>
+        </div>
+      </a>
+      <div style="font-family:Arial,Helvetica,sans-serif;color:var(--muted);font-size:13px">Crafted with Love By Surjan Dhungal</div>
+    </header>
+
+    <main>
+      <section class="card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:220px">
+            <label for="joined">Date Joined</label>
+            <input id="joined" type="date" aria-label="Date joined">
+          </div>
+          <div style="flex:1;min-width:220px">
+            <label for="left">Date Left</label>
+            <input id="left" type="date" aria-label="Date left">
+          </div>
+          <div style="flex:1;min-width:220px">
+            <label for="dob">Date of Birth (optional)</label>
+            <input id="dob" type="date" aria-label="Date of birth">
+            <div style="font-size:12px;color:var(--muted);margin-top:6px">Provide DOB to check retirement eligibility (age ≥ 55 at leaving date).</div>
+          </div>
+        </div>
+
+        <div class="actions" style="margin-top:14px">
+          <button class="btn" id="decideBtn">Check Now</button>
+          <button class="btn ghost" id="resetBtn">Reset</button>
+        </div>
+
+        <div id="resultArea" class="result" aria-live="polite" style="display:none;margin-top:16px">
+          <!-- result content injected here -->
+        </div>
+      </section>
+
+      <footer>
+        © <span id="year"></span> Leaving Pension Decider
+      </footer>
+    </main>
+  </div>
+
+  <!-- confirmation modal -->
+  <div id="confirmModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="panel">
+      <h3 id="confirmTitle">Confirm</h3>
+      <p id="confirmText" style="color:var(--muted)"></p>
+      <div style="display:flex;gap:10px;margin-top:12px;justify-content:flex-end">
+        <button class="btn ghost" id="cancelConfirm">Cancel</button>
+        <button class="btn" id="okConfirm">Next</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // utilities
+  function parseDateInput(value){
+    if(!value) return null;
+    const d = new Date(value + 'T00:00:00'); // treat as local date
+    return isNaN(d) ? null : d;
+  }
+
+  // months difference from d1 to d2 (d2 >= d1 expected)
+  function monthsBetween(d1, d2){
+    const y1 = d1.getFullYear(), m1 = d1.getMonth(), day1 = d1.getDate();
+    const y2 = d2.getFullYear(), m2 = d2.getMonth(), day2 = d2.getDate();
+    let months = (y2 - y1) * 12 + (m2 - m1);
+    // adjust when day2 < day1 (not completed month)
+    if(day2 < day1) months -= 1;
+    return months;
+  }
+
+  // age at date (integer years)
+  function ageAt(dob, atDate){
+    if(!dob) return null;
+    const y = atDate.getFullYear() - dob.getFullYear();
+    const m = atDate.getMonth() - dob.getMonth();
+    const dayDiff = atDate.getDate() - dob.getDate();
+    let age = y;
+    if(m < 0 || (m === 0 && dayDiff < 0)) age -= 1;
+    return age;
+  }
+
+  // UI elements
+  const joinedEl = document.getElementById('joined');
+  const leftEl = document.getElementById('left');
+  const dobEl = document.getElementById('dob');
+  const decideBtn = document.getElementById('decideBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const resultArea = document.getElementById('resultArea');
+  const yearSpan = document.getElementById('year');
+
+  // modal elements
+  const modal = document.getElementById('confirmModal');
+  const confirmTitle = document.getElementById('confirmTitle');
+  const confirmText = document.getElementById('confirmText');
+  const okConfirm = document.getElementById('okConfirm');
+  const cancelConfirm = document.getElementById('cancelConfirm');
+
+  yearSpan.textContent = new Date().getFullYear();
+
+  // show modal helper
+  function showModal(title, text, onConfirm){
+    confirmTitle.textContent = title;
+    confirmText.textContent = text;
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden','false');
+    okConfirm.onclick = ()=>{
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+      onConfirm && onConfirm();
+    };
+    cancelConfirm.onclick = ()=>{
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+    };
+  }
+
+  // main decision logic
+  decideBtn.addEventListener('click', ()=>{
+    const d1 = parseDateInput(joinedEl.value);
+    const d2 = parseDateInput(leftEl.value);
+    const dob = parseDateInput(dobEl.value);
+
+    resultArea.style.display = 'none';
+    resultArea.innerHTML = '';
+
+    if(!d1 || !d2){
+      resultArea.style.display = '';
+      resultArea.innerHTML = '<h3 style="color:#b33">Please enter both dates (Date Joined and Date Left).</h3><div class="note">Both dates are required to determine the correct option.</div>';
+      return;
+    }
+    if(d2 < d1){
+      resultArea.style.display = '';
+      resultArea.innerHTML = '<h3 style="color:#b33">Date Left cannot be before Date Joined.</h3><div class="note">Please check the entered dates.</div>';
+      return;
+    }
+
+    const months = monthsBetween(d1, d2);
+    const years = months / 12;
+    const age = dob ? ageAt(dob, d2) : null;
+
+    // Less than 3 months
+    if(months < 3){
+      resultArea.style.display = '';
+      resultArea.innerHTML = `
+        <h3>Less than three months</h3>
+        <div class="note">Your employment/service period is less than three months. Your contributions would normally be <strong>refunded via payroll</strong>.</div>
+      `;
+      return;
+    }
+
+    // >= 3 months and < 2 years
+    if(months >= 3 && months < 24){
+      resultArea.style.display = '';
+      resultArea.innerHTML = `
+        <h3>Leaver (3 months – 2 years)</h3>
+        <div class="note">You have options. Choose one:</div>
+        <div class="options">
+          <div class="option-card">
+            <strong>Refund contribution</strong>
+            <div style="color:var(--muted);font-size:13px">Have your contribution refunded to you via payroll. This will close your pension entitlement for this period.</div>
+            <div style="margin-top:10px"><button class="btn ghost" data-action="refund">Choose Refund</button></div>
+          </div>
+          <div class="option-card">
+            <strong>Transfer benefits</strong>
+            <div style="color:var(--muted);font-size:13px">Transfer your accrued benefits to a new provider (subject to transfer rules).</div>
+            <div style="margin-top:10px"><button class="btn" data-action="transfer">Choose Transfer</button></div>
+          </div>
+        </div>
+      `;
+      attachOptionButtons();
+      return;
+    }
+
+    // >= 2 years
+    if(months >= 24){
+      const canRetire = (age !== null && age >= 55);
+      resultArea.style.display = '';
+      resultArea.innerHTML = `
+        <h3>More than two years of service</h3>
+        <div class="note">Your benefits will normally be <strong>Deferred </strong>With the current pension provider.See options below.</div>
+        <div class="options">
+
+          <div class="option-card">
+            <strong>Deferred Benefits</strong>
+            <div style="color:var(--muted);font-size:13px">Defer you Benefits with the current scheme untill you become eligible for Pension.You need not to take any action untill you decide to Retire</div>
+          </div>
+
+
+          <div class="option-card">
+            <strong>Transfer benefits</strong>
+            <div style="color:var(--muted);font-size:13px">Transfer your deferred benefits to another provider (if allowed by scheme rules).</div>
+            <div style="margin-top:10px"><button class="btn" data-action="transfer">Know More</button></div>
+          </div>
+
+
+          <div class="option-card" style="opacity:${canRetire?1:0.6};">
+            <strong>Retire (if eligible)</strong>
+            <div style="color:var(--muted);font-size:13px">${canRetire ? 'You appear to be age 55 or over at the date left — retirement is available.' : 'Retirement option is only available if you are aged 55 or over at the date left.'}</div>
+            <div style="margin-top:10px"><button class="btn ${canRetire ? '' : 'ghost'}" data-action="retire" ${canRetire ? '' : 'disabled'}>Know More</button></div>
+          </div>
+        </div>
+      `;
+      attachOptionButtons();
+      if(age === null){
+        // show helpful note about dob absent
+        const el = document.createElement('div');
+        el.className = 'note';
+        el.style.marginTop = '10px';
+        el.innerHTML = 'Note: You did not provide a Date of Birth. If you think you may be 55+, provide your DOB to enable the retirement option.';
+        resultArea.appendChild(el);
+      }
+      return;
+    }
+  });
+
+  // attach click handlers to dynamically created option buttons
+  function attachOptionButtons(){
+    resultArea.querySelectorAll('button[data-action]').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        const action = btn.getAttribute('data-action');
+        if(action === 'refund'){
+          showModal('Confirm refund', 'If you choose a refund your contributions will be returned and the pension entitlement for this period will be closed.', ()=>{
+            showFinal('Refund chosen', '.Please contact your scheme Pension Administrator to complete the refund process.');
+          });
+        } else if(action === 'transfer'){
+          showModal('Transfer', 'If you choose to transfer your benefits they will be moved to another provider (subject to scheme rules).', ()=>{
+            showFinal('Transfer chosen', ' Contact your scheme Pension Adminstraor requesting transfer.They will then issue a Transfer Quote After which you can finalize your transfer');
+          });
+        } else if(action === 'retire'){
+          showModal('Retirement', 'Retirement will start the process to pay your pension (subject to scheme rules).', ()=>{
+            showFinal('Retirement chosen', 'Please contact your scheme’s Pension Administrator to request a retirement quotation for your chosen date. Once you receive the quote, you can finalise your benefits and begin receiving your monthly pension. Note: Retiremnt age differs scheme to schme and Types of your contributions');
+          });
+        }
+      });
+    });
+  }
+
+  function showFinal(title, text){
+    resultArea.innerHTML = `<h3>${title}</h3><div class="note">${text}</div>`;
+  }
+
+  // reset handler
+  resetBtn.addEventListener('click', ()=>{
+    joinedEl.value = '';
+    leftEl.value = '';
+    dobEl.value = '';
+    resultArea.style.display = 'none';
+    resultArea.innerHTML = '';
+  });
+
+  // close modal on outside click
+  modal.addEventListener('click', (ev)=>{
+    if(ev.target === modal){
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+    }
+  });
+
+  // small UX: if user picks left date earlier than joined, show instant warning
+  leftEl.addEventListener('change', ()=>{
+    const d1 = parseDateInput(joinedEl.value);
+    const d2 = parseDateInput(leftEl.value);
+    if(d1 && d2 && d2 < d1){
+      resultArea.style.display = '';
+      resultArea.innerHTML = '<h3 style="color:#b33">Warning: Date Left is before Date Joined.</h3><div class="note">Please correct the dates.</div>';
+    } else {
+      // clear warning only if result area contains the specific warning text
+      if(resultArea.innerHTML.includes('Warning: Date Left is before Date Joined.')){
+        resultArea.style.display = 'none';
+        resultArea.innerHTML = '';
+      }
+    }
+  });
+
+</script>
+</body>
+</html>
